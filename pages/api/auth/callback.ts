@@ -1,22 +1,22 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { token } = req.query;
+export default async function handler(req, res) {
+  const code = req.query.code;
 
-  if (!token || typeof token !== 'string') {
-    return res.status(400).json({ error: 'Missing token' });
-  }
+  const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
+    code,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+    redirect_uri: 'https://saveyouraudience.com/api/auth/callback',
+    grant_type: 'authorization_code',
+  });
 
-  try {
-    // Forward token to your n8n webhook
-    await fetch('https://leonardchin2731.app.n8n.cloud/webhook/49e1783b-5a8d-41ab-a0c4-7aa20df69235', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token }),
-    });
+  const tokens = tokenRes.data;
 
-    return res.redirect('https://thankyoupage.com'); // Optional thank-you or redirect page
-  } catch (err) {
-    return res.status(500).json({ error: 'Token forwarding failed' });
-  }
+  // Send to n8n
+  await axios.post('https://leonardchin2731.app.n8n.cloud/webhook/49e1783b-5a8d-41ab-a0c4-7aa20df69235', {
+    tokens,
+  });
+
+  res.redirect('/success'); // optional thank you page
 }

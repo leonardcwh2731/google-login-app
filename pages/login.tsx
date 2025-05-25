@@ -10,7 +10,7 @@ export default function LoginPage() {
 
     script.onload = () => {
       window.google.accounts.id.initialize({
-        client_id: 'YOUR_GOOGLE_CLIENT_ID',
+        client_id: '858807355864-0aar72nts7i1qm2tqe90fdjn2mh7lrqr.apps.googleusercontent.com',
         callback: handleCredentialResponse,
       });
 

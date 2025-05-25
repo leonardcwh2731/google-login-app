@@ -1,22 +1,23 @@
-import { signIn } from "next-auth/react";
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id: '858807355864-j4q8g0sm8ncspjqr1u6gqps3dkt0o6c2.apps.googleusercontent.com',
+      callback: (response) => {
+        window.location.href = `/api/auth/callback?token=${response.credential}`;
+      },
+    });
+    window.google.accounts.id.renderButton(
+      document.getElementById('google-signin-btn'),
+      { theme: 'outline', size: 'large' }
+    );
+  }, []);
+
   return (
-    <div style={{ textAlign: "center", marginTop: "40px" }}>
-      <button
-        onClick={() => signIn("google")}
-        style={{
-          padding: "12px 24px",
-          background: "#4285F4",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
-      >
-        Sign in with Google
-      </button>
-    </div>
+    <>
+      <div id="google-signin-btn"></div>
+      <script src="https://accounts.google.com/gsi/client" async defer></script>
+    </>
   );
 }

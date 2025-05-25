@@ -6,7 +6,7 @@ export default function Home() {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.google) {
       window.google.accounts.id.initialize({
-        client_id: 'YOUR_CLIENT_ID_HERE',
+        client_id: '858807355864-j4q8g0sm8ncspjqr1u6gqps3dkt0o6c2.apps.googleusercontent.com',
         callback: (response: any) => {
           window.location.href = `/api/auth/callback?token=${response.credential}`;
         },

@@ -1,7 +1,7 @@
 // pages/login.tsx
 export default function Login() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const redirectUri = 'https://saveyouraudience.com/api/auth/callback';
+  const redirectUri = 'https://auth.veraops.com/api/auth/callback';
 
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile%20https://www.googleapis.com/auth/gmail.readonly%20https://www.googleapis.com/auth/calendar.readonly&access_type=offline&prompt=consent`;
 

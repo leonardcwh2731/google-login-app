@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const tokens = tokenRes.data;
 
     // ✅ Send tokens to n8n webhook
-    await axios.post('https://leonardchin2731.app.n8n.cloud/webhook/49e1783b-5a8d-41ab-a0c4-7aa20df69235', tokens);
+    await axios.post('https://leonardchin2731.app.n8n.cloud/webhook-test/49e1783b-5a8d-41ab-a0c4-7aa20df69235', tokens);
 
     // ✅ Redirect user to a friendly page (thank-you, dashboard, etc.)
     return res.redirect(302, 'https://www.veraops.com/'); // Customize this URL
